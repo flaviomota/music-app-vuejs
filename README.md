@@ -1,6 +1,12 @@
 # music-app
 
-This template should help get you started developing with Vue 3 in Vite.
+This is a Music App - Project using:
+	- Vue JS
+	- Vue Router
+	- Tailwind CSS
+	- Pinia
+	- Vitest
+	- Cypress
 
 ## Recommended IDE Setup
 
