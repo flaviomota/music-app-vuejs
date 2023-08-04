@@ -1,12 +1,6 @@
 # music-app
 
-This is a Music App - Project using:
-	- Vue JS
-	- Vue Router
-	- Tailwind CSS
-	- Pinia
-	- Vitest
-	- Cypress
+This is a Music App - Project using: - Vue JS - Vue Router - Tailwind CSS - Pinia - Vitest - Cypress - Firebase
 
 ## Recommended IDE Setup
 
