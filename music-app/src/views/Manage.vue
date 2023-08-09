@@ -135,3 +135,21 @@
     </div>
   </section>
 </template>
+
+<script>
+// import useUserStore from '@/stores/user';
+
+export default {
+  name: 'Manage'
+  // eslint-disable-next-line no-unused-vars
+  // beforeRouteEnter(to, from, next) {
+  //   const store = useUserStore();
+
+  //   if (store.userLoggedIn) {
+  //     next();
+  //   } else {
+  //     next({ name: 'home' });
+  //   }
+  // }
+};
+</script>
