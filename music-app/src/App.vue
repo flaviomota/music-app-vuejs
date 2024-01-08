@@ -1,62 +1,57 @@
 <template>
-  <AppHeader />
-
-  <router-view></router-view>
-
-  <!-- Player -->
-  <div class="fixed bottom-0 left-0 bg-white px-4 py-2 w-full">
-    <!-- Track Info -->
-    <div class="text-center">
-      <span class="song-title font-bold">Song Title</span> by
-      <span class="song-artist">Artist</span>
-    </div>
-    <div class="flex flex-nowrap gap-4 items-center">
-      <!-- Play/Pause Button -->
-      <button type="button">
-        <i class="fa fa-play text-gray-500 text-xl"></i>
-      </button>
-      <!-- Current Position -->
-      <div class="player-currenttime">00:00</div>
-      <!-- Scrub Container  -->
-      <div class="w-full h-2 rounded bg-gray-200 relative cursor-pointer">
-        <!-- Player Ball -->
-        <span class="absolute -top-2.5 -ml-2.5 text-gray-800 text-lg" style="left: 50%">
-          <i class="fas fa-circle"></i>
-        </span>
-        <!-- Player Progress Bar-->
-        <span
-          class="block h-2 rounded bg-gradient-to-r from-green-500 to-green-400"
-          style="width: 50%"
-        ></span>
+  <div id="app" class="row d-flex justify-content-center">
+    <div class="col-md-6 mt-3">
+      <div class="card">
+        <div class="card-header">Newsletter</div>
+        <div class="card-body">
+          <form @submit.prevent="submit">
+            <div class="mb-3">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Name"
+                :value="newsletterName"
+                @input="newsletterName = $event.target.value"
+              />
+            </div>
+            <div class="mb-3">
+              <email-input v-model:email="newsletterEmail" />
+              <!-- <email-input
+                :modelValue="newsletterEmail"
+                @update:modelValue="newsletterEmail = $event"
+              /> -->
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
       </div>
-      <!-- Duration -->
-      <div class="player-duration">03:06</div>
     </div>
   </div>
-
-  <Auth />
 </template>
 
 <script>
-import AppHeader from '@/components/AppHeader.vue';
-import Auth from '@/components/Auth.vue';
-import { mapWritableState } from 'pinia';
-import useUserStore from '@/stores/user';
-import { auth } from './includes/firebase';
+import EmailInput from "@/components/EmailInput.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    AppHeader,
-    Auth
+    EmailInput,
   },
-  computed: {
-    ...mapWritableState(useUserStore, ['userLoggedIn'])
+  data() {
+    return {
+      newsletterName: "",
+      newsletterEmail: "",
+    };
   },
-  created() {
-    if (auth.currentUser) {
-      this.userLoggedIn = true;
-    }
-  }
+  methods: {
+    submit() {
+      console.log("Newletter Submitted", {
+        name: this.newsletterName,
+        email: this.newsletterEmail,
+      });
+    },
+  },
 };
 </script>
+
+<style src="bootstrap/dist/css/bootstrap.css"></style>
