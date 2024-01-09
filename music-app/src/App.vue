@@ -1,57 +1,54 @@
 <template>
-  <div id="app" class="row d-flex justify-content-center">
-    <div class="col-md-6 mt-3">
-      <div class="card">
-        <div class="card-header">Newsletter</div>
-        <div class="card-body">
-          <form @submit.prevent="submit">
-            <div class="mb-3">
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Name"
-                :value="newsletterName"
-                @input="newsletterName = $event.target.value"
-              />
-            </div>
-            <div class="mb-3">
-              <email-input v-model:email="newsletterEmail" />
-              <!-- <email-input
-                :modelValue="newsletterEmail"
-                @update:modelValue="newsletterEmail = $event"
-              /> -->
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
+  <app-header />
+
+  <router-view v-slot="{ Component }">
+    <transition name="fade" mode="out-in">
+      <component :is="Component"></component>
+    </transition>
+  </router-view>
+
+  <app-player />
+
+  <auth />
 </template>
 
 <script>
-import EmailInput from "@/components/EmailInput.vue";
+import AppHeader from "@/components/Header.vue";
+import Auth from "@/components/Auth.vue";
+import { mapWritableState } from "pinia";
+import useUserStore from "@/stores/user";
+import { auth } from "./includes/firebase";
+import AppPlayer from "@/components/Player.vue";
 
 export default {
   name: "App",
   components: {
-    EmailInput,
+    AppHeader,
+    Auth,
+    AppPlayer,
   },
-  data() {
-    return {
-      newsletterName: "",
-      newsletterEmail: "",
-    };
+  computed: {
+    ...mapWritableState(useUserStore, ["userLoggedIn"]),
   },
-  methods: {
-    submit() {
-      console.log("Newletter Submitted", {
-        name: this.newsletterName,
-        email: this.newsletterEmail,
-      });
-    },
+  created() {
+    if (auth.currentUser) {
+      this.userLoggedIn = true;
+    }
   },
 };
 </script>
 
-<style src="bootstrap/dist/css/bootstrap.css"></style>
+<style>
+.fade-enter-from {
+  opacity: 0;
+}
+
+.fade-enter-active {
+  transition: all 0.5s linear;
+}
+
+.fade-leave-to {
+  transition: all 0s lienar;
+  opacity: 0;
+}
+</style>
